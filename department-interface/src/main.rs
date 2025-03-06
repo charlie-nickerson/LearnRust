@@ -3,6 +3,12 @@
 // 2. User should be able to retrieve a list of all people in a department.
 // 3. User should be able to retrieve all users by department sorted alphametically.
 
+struct Department {
+    name: String,
+    employees: Vec<String>,
+}
+
+
 fn initialize_departments(){
     use std::collections::HashMap;
     let mut employees = HashMap::new();
@@ -25,6 +31,23 @@ fn initialize_departments(){
     }    
 }
 
+fn display_prompts() {
+    use std::io;
+    let mut name: String = String::new();
+    
+    println!("Please type in a Name:");
+
+    io::stdin()
+        .read_line(&mut name)
+        .expect("Failed to read line");
+
+    let name: String = name.trim().to_string();
+
+    println!("Please select a department to add {name} to:");
+    
+
+}
+
 fn main() {
-    println!("Hello, world!");
+    display_prompts()
 }

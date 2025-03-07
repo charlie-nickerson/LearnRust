@@ -1,18 +1,18 @@
+use std::collections::HashMap;
+use std::io;
 // Desired Functionality:
 // 1. User can add employee names to a department.
 // 2. User should be able to retrieve a list of all people in a department.
 // 3. User should be able to retrieve all users by department sorted alphametically.
 
 struct Department {
-    id: u32,
     name: String,
     employees: Vec<String>,
 }
 
 
 
-fn initialize_departments(){
-    use std::collections::HashMap;
+fn initialize_departments() -> HashMap<usize, Department> {
     let mut employees = HashMap::new();
 
     let departments = vec!["Human Resources",
@@ -26,15 +26,26 @@ fn initialize_departments(){
     "Legal",
     "Supply Chain Management"];
 
-    for department in departments.iter() {
-        // Initialize a hashmap with department names as keys
-        // and an empty vector that stores the employee names
-        employees.insert(department, Vec::<String>::new());
-    }    
+    for (id, name) in departments.iter().enumerate() {
+
+        // Initialize a hashmap with department ids and their correpsonding deparments
+        let department = Department {
+            name: name.to_string(),
+            employees: Vec::<String>::new()
+        };
+
+        // Store the department in a hashmap
+        employees.insert(id + 1, department);
+        
+        // Display department and ID
+        println!("{}: {name}", id + 1);
+    }
+
+    return employees
+
 }
 
 fn display_prompts() {
-    use std::io;
     let mut name: String = String::new();
     
     println!("Please type in a Name:");
@@ -47,12 +58,10 @@ fn display_prompts() {
     let name: String = name.trim().to_string();
 
     println!("Please select a department to add {name} to:");
-
-
-    
+    let mut departments = initialize_departments();
 
 }
 
 fn main() {
-    display_prompts()
+    display_prompts();
 }

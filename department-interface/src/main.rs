@@ -76,8 +76,35 @@ fn add_employees_to_department(departments: &mut HashMap<usize, Department>) {
     let choice: usize = choice.trim().parse().expect("Please type a number!");
 
     departments.get_mut(&choice).unwrap().employees.push(name);
+    departments.get_mut(&choice).unwrap().employees.sort();
+}
 
-    println!("{:?}", departments);
+fn list_employees_in_department(departments: &mut HashMap<usize, Department>) {
+    println!("1. {:?}", departments);
+    println!("What department do you want to list?");
+
+    // Create a vector to list out the departments by order of their key values
+    let entries: &mut Vec<(&usize, &Department)>  = &mut departments.iter().collect();
+    entries.sort_by_key(|entry|entry.0);
+    
+    // list all the departments
+    for (id, department) in entries {
+        println!("{id}: {:?}", department.name);
+    }
+    
+    let mut choice =  String::new();
+    
+    io::stdin()
+    .read_line(&mut choice)
+    .expect("Failed to read line");
+    
+    let choice: usize = choice.trim().parse().expect("Please type a number!");
+    
+    println!("{:?}", departments.get_mut(&choice).unwrap().employees);
+    
+
+
+
 }
 
 fn main() {
@@ -94,12 +121,12 @@ fn main() {
             .read_line(&mut choice)
             .expect("Failed to read line");
 
-        let mut choice: usize = choice.trim().parse().expect("Please type a number!");
+        let choice: usize = choice.trim().parse().expect("Please type a number!");
     
         if choice == 1 {
             add_employees_to_department(&mut departments);
         } else if choice == 2 {
-            todo!();
+            list_employees_in_department(&mut departments);
         } else if choice == 3 {
             todo!();
         } else {

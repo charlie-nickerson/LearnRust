@@ -1,9 +1,10 @@
-use std::collections::HashMap;
-use std::io;
 // Desired Functionality:
 // 1. User can add employee names to a department.
 // 2. User should be able to retrieve a list of all people in a department.
-// 3. User should be able to retrieve all users by department sorted alphametically.
+// 3. User should be able to retrieve all users by department sorted alphabetically.
+
+use std::collections::HashMap;
+use std::io;
 
 #[derive(Debug)]
 struct Department {
@@ -75,12 +76,12 @@ fn add_employees_to_department(departments: &mut HashMap<usize, Department>) {
 
     let choice: usize = choice.trim().parse().expect("Please type a number!");
 
+    // Add the name to the specified department and sort the employees in alphabetical order
     departments.get_mut(&choice).unwrap().employees.push(name);
     departments.get_mut(&choice).unwrap().employees.sort();
 }
 
 fn list_employees_in_department(departments: &mut HashMap<usize, Department>) {
-    println!("1. {:?}", departments);
     println!("What department do you want to list?");
 
     // Create a vector to list out the departments by order of their key values
@@ -101,10 +102,17 @@ fn list_employees_in_department(departments: &mut HashMap<usize, Department>) {
     let choice: usize = choice.trim().parse().expect("Please type a number!");
     
     println!("{:?}", departments.get_mut(&choice).unwrap().employees);
-    
+}
 
+fn list_all_employees(departments: &mut HashMap<usize, Department>) {
+    // Create a vector to list out the departments by order of their names values
+    let entries: &mut Vec<(&usize, &Department)>  = &mut departments.iter().collect();
+    entries.sort_by_key(|entry|entry.1.name.clone());
 
-
+    // list all the departments
+    for (_, department) in entries {
+        println!("Department Name: {:?}\nEmployees: {:?}\n", department.name, department.employees);
+    }
 }
 
 fn main() {
@@ -128,7 +136,7 @@ fn main() {
         } else if choice == 2 {
             list_employees_in_department(&mut departments);
         } else if choice == 3 {
-            todo!();
+            list_all_employees(&mut departments);
         } else {
             println!("Invalid option");
         }

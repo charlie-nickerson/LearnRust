@@ -1,0 +1,1 @@
+C:\Users\charl\Documents\Repositories\LearnRust\traits\target\debug\traits.exe: C:\Users\charl\Documents\Repositories\LearnRust\traits\src\lib.rs C:\Users\charl\Documents\Repositories\LearnRust\traits\src\main.rs

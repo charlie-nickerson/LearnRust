@@ -5,7 +5,9 @@ use std::error::Error;
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     let contents = fs::read_to_string(config.file_path)?;
 
-    println!("Within text : \n{contents}");
+    for line in search(&config.query, &contents) {
+        println!("{line}");
+    }
 
     Ok(())
 }

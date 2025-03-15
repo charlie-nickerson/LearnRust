@@ -1,1 +1,1 @@
-C:\Users\charl\Documents\Repositories\LearnRust\minigrep\target\debug\minigrep.exe: C:\Users\charl\Documents\Repositories\LearnRust\minigrep\src\main.rs
+C:\Users\charl\Documents\Repositories\LearnRust\minigrep\target\debug\minigrep.exe: C:\Users\charl\Documents\Repositories\LearnRust\minigrep\src\lib.rs C:\Users\charl\Documents\Repositories\LearnRust\minigrep\src\main.rs

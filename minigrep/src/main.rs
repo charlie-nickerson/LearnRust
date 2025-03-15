@@ -1,6 +1,9 @@
 use std::env;
 use std::fs;
 use std::process;
+use std::error::Error;
+
+use minigrep::Config;
 
 fn main() {
 
@@ -15,36 +18,9 @@ fn main() {
         process::exit(1);
     });
 
-    let contents = fs::read_to_string(config.file_path).expect("Should have been able to read from file");
-
-    println!("Within text : \n{contents}");
-
-}
-
-
-// Putting query and file_path under the same struct indicates
-// to programmers that these variables are related to each other
-struct Config {
-    query: String,
-    file_path: String,
-}
-
-impl Config {
-    // Changing the parse_config function into a method for config
-    // shows the programmer that the function is strongly related
-    // to the variables in config. 
-    fn build(args: &[String]) -> Result<Config, &'static str>  {
-                // the first argument in args[0]
-                if args.len() < 3 {
-                    // Error methods always return string literals with 'static lifetime
-                    return Err("Too few arguments");
-                }
-                let query = args[1].clone();
-                let file_path = args[2].clone();
-            
-                println!("Searching for {query}");
-                println!("in file {file_path}");
-        
-                Ok(Config {query, file_path})
+    if let Err(e) = minigrep::run(config) {
+        println!("Application error: {e}");
+        process::exit(1);
     }
+
 }

@@ -32,14 +32,30 @@ impl Config {
     // Changing the parse_config function into a method for config
     // shows the programmer that the function is strongly related
     // to the variables in config. 
-    pub fn build(args: &[String]) -> Result<Config, &'static str>  {
-                // the first argument in args[0]
-                if args.len() < 3 {
-                    // Error methods always return string literals with 'static lifetime
-                    return Err("Too few arguments");
-                }
-                let query = args[1].clone();
-                let file_path = args[2].clone();
+    pub fn build(
+            // This looks weird but we are actually passing in an iterator as a parameter
+            // I think the compiler is expecting a value that implements the Iterator trait
+            mut args: impl Iterator<Item = String>) -> Result<Config, &'static str>  {
+                args.next();
+
+                let query = match args.next() {
+                    Some(arg) => arg,
+                    None => return Err("Didn't get a query string"),
+                };
+
+                let file_path = match args.next() {
+                    Some(arg) => arg,
+                    None => return Err("Didn't get a file path string"),
+                };    
+                
+                // ** Old Implementation - No Iterators **
+                // // the first argument in args[0]
+                // if args.len() < 3 {
+                //     // Error methods always return string literals with 'static lifetime
+                //     return Err("Too few arguments");
+                // }
+                // let query = args[1].clone();
+                // let file_path = args[2].clone();
 
                 let ignore_case = env::var("IGNORE_CASE").is_ok();
             
